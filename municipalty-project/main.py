@@ -158,7 +158,8 @@ async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(
     username = form_data.username.strip()
     password = form_data.password.strip()
     if "@" in username:
-        user = authenticate_user_by_email(db, username, password)
+        email = username
+        user = authenticate_user_by_email(db, email, password)
         if not user:
             raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Incorrect username or password", headers={"WWW-Authenticate"})
         
