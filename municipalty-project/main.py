@@ -48,8 +48,8 @@ class User(BaseModel):
 class UserInDb(User):
     hashed_password: str
 
-class CheckUser(BaseModel):
-    username: str
+# class CheckUser(BaseModel):
+#     username: str
 
 context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 oauth2scheme = OAuth2PasswordBearer(tokenUrl="login")
@@ -83,13 +83,28 @@ def get_user(db, username: str):
         user_data = db[username]
         return UserInDb(**user_data)
     
+def get_user_by_email(db, email: str):
+    user = None
+    for i in db:
+        if email == db[i]["email"]:
+            user = db[i]
+    user_data = user
+    return UserInDb(**user_data)
+    
 def authenticate_user(db, username: str, password: str):
     user = get_user(db, username)
     if not user:
         return False
     if not verify_password(password, user.hashed_password):
         return False
-    
+    return user
+
+def authenticate_user_by_email(db, email: str, password: str):
+    user = get_user_by_email(db, email)
+    if not user:
+        return False
+    if not verify_password(password, user.hashed_password):
+        return False
     return user
 
 def create_access_token(data: dict, expires_delta: timedelta or None=None):
@@ -129,23 +144,35 @@ async def get_current_active_user(current_user: UserInDb = Depends(get_current_u
     
     return current_user
 
-@app.post('/checkUser')
-async def check_user(user: CheckUser):
-    user = get_user(db, user.username)
-    if user:
-        return {"username": user.username, "full_name": user.full_name, "email": user.email}
-    else:
-        return 'User not found!'
+# Discarded implementation
+# @app.post('/checkUser')
+# async def check_user(user: CheckUser):
+#     user = get_user(db, user.username)
+#     if user:
+#         return {"username": user.username, "full_name": user.full_name, "email": user.email}
+#     else:
+#         return 'User not found!'
     
 @app.post('/login', response_model=Token)
 async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends()):
-    user = authenticate_user(db, form_data.username, form_data.password)
-    if not user:
-        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Incorrect username or password", headers={"WWW-Authenticate"})
-    
-    access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRES_MINUTES)
-    access_token = create_access_token(data={"sub": user.username}, expires_delta=access_token_expires)
-    return {"access_token": access_token, "token_type":"bearer"}
+    username = form_data.username.strip()
+    password = form_data.password.strip()
+    if "@" in username:
+        user = authenticate_user_by_email(db, username, password)
+        if not user:
+            raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Incorrect username or password", headers={"WWW-Authenticate"})
+        
+        access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRES_MINUTES)
+        access_token = create_access_token(data={"sub": user.username}, expires_delta=access_token_expires)
+        return {"access_token": access_token, "token_type":"bearer"}
+    else:
+        user = authenticate_user(db, username, password)
+        if not user:
+            raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Incorrect username or password", headers={"WWW-Authenticate"})
+        
+        access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRES_MINUTES)
+        access_token = create_access_token(data={"sub": user.username}, expires_delta=access_token_expires)
+        return {"access_token": access_token, "token_type":"bearer"}
 
 @app.get('/user/data', response_model= User)
 async def get_user_data(current_user: User = Depends(get_current_active_user)):
