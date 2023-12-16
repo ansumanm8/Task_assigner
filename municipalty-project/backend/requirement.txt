@@ -1,0 +1,9 @@
+fastapi
+python-decouple
+pydantic
+pymongo
+python-jose[Cryptography]
+python-multipart
+python-dotenv
+uvicorn[standard]
+passlib[bcrpyt]
