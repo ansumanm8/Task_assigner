@@ -9,9 +9,27 @@ Task Assigner backend is a robust application designed to streamline and optimiz
 - **Database Integration**: Integration with a document database for storing task and user data.
 - **Authorization**: Role-based access control to restrict access to certain functionalities.
 
-## Technologies used
+## Technologies Used
 
-- Python
-- FastAPI
-- MongoDB
-- Docker
+- **Programming Language**: Python
+- **Framework**: FastAPI
+- **Database**: MongoDB
+- **Authentication**: JWT
+- **Testing Framework**: Pytest
+- **Documentation**: FastAPI Documentation
+
+
+## Getting Started
+
+Follow these instructions to get the project up and running on your local machine.
+
+### Prerequisites
+
+- Python / MongoDB / FastAPI
+
+### Installation
+
+1. Clone the repository:
+
+   ```bash
+   <>
