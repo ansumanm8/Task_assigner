@@ -39,3 +39,4 @@ Follow these instructions to get the project up and running on your local machin
 - k8s scaling
 - dockerizing the code
 - elk if possible!
+- logging and testing needs to be done.
