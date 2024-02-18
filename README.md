@@ -42,3 +42,4 @@ Follow these instructions to get the project up and running on your local machin
 - logging and testing needs to be done.
 - adding telemetry implementation (learning underway)
 - best practices needs to be checked out for
+- A lot to achieve.🥲 
