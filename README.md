@@ -43,4 +43,4 @@ Follow these instructions to get the project up and running on your local machin
 - adding telemetry implementation (learning underway)
 - best practices needs to be checked out for
 - complete flowchart with best practices and deployment best practices.
-- Progression 💹
+- Swagger API Screenshots 
