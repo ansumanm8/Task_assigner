@@ -38,9 +38,9 @@ Follow these instructions to get the project up and running on your local machin
 
 - k8s scaling
 - dockerizing the code
-- elk if possible!
+- elk > adding telemetry implementation (learning underway)
 - logging and testing needs to be done.
-- adding telemetry implementation (learning underway)
 - best practices needs to be checked out for
 - complete flowchart with best practices and deployment best practices.
-- Swagger API Screenshots 
+- Swagger API Screenshots
+- 
