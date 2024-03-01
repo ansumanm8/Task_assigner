@@ -44,3 +44,4 @@ Follow these instructions to get the project up and running on your local machin
 - complete flowchart with best practices and deployment best practices.
 - Swagger API Screenshots
 - sprint planning
+- user_story - build 2 GET APIs with all the best practices 
