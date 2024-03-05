@@ -46,4 +46,4 @@ Follow these instructions to get the project up and running on your local machin
 - sprint planning
 - user_story - build 2 GET APIs with all the best practices 
 - planned delivery by eod - 3rd march #failed no development done
-- no development done either
+- no development done either * today too
